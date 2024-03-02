@@ -24,6 +24,7 @@
   - I like to keep components just like this small
   - I am mostly coding in NextJS so work with page or app router
   - I use a lot of custom hooks to keep the core logic and redundant logic separate
+- I couldn't record a such long video that I could upload somewhere, it wasn't feasible for me.
 - If you want me to make further improvements, or want to discuss further I will be more than happy to comply
 - Thanks
 
