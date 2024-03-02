@@ -1,7 +1,7 @@
 import BookItem from '@components/BookItem';
-import { useBooks } from '@src/BookContext';
+import { useBooks } from '@/src/BookContext';
 import { useParams } from 'react-router-dom';
-import { Book } from '@types';
+import { Book } from '@/src/types';
 
 function BookPage() {
   const { bookId } = useParams();

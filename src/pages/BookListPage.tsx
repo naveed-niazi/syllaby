@@ -1,5 +1,5 @@
-import { useBooks } from '@src/BookContext';
-import { Book } from '@src/types';
+import { useBooks } from '@/src/BookContext';
+import { Book } from '@/src/types';
 
 function BookListPage() {
   const { books, deleteBook } = useBooks();

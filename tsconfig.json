@@ -23,8 +23,7 @@
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
       "@hooks/*": ["hooks/*"],
-      "@types/*": ["types/*"],
-      "@src/*": ["./"]
+      "@/src/*": ["./*"]
     }
   },
   "include": ["src"],

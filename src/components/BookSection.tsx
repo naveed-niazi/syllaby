@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { Section } from '../../types';
+import { Section } from '@/src/types';
 
 const BookSection: React.FC<{
   section: Section;
@@ -7,41 +7,36 @@ const BookSection: React.FC<{
   removeSection: (id: string) => void;
   updateSection: (id: string, newTitle: string, content: string) => void;
 }> = ({ section, addSubsection, removeSection, updateSection }) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(section.title);
   const [content, setContent] = useState(section.content);
 
   const handleBlur = () => {
-    setIsEditing(false);
     updateSection(section.id, title, content);
   };
 
   return (
     <Fragment>
       <div style={{ marginLeft: '20px', marginTop: '10px' }}>
-        {isEditing ? (
-          <>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              onBlur={handleBlur}
-            />
-            <input
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              onBlur={handleBlur}
-            />
-          </>
-        ) : (
-          <span>
-            <span onDoubleClick={() => setIsEditing(true)}>{title}</span>
-            <span onDoubleClick={() => setIsEditing(true)}>{content}</span>
-          </span>
-        )}
-        <button onClick={() => addSubsection(section.id)}>
-          Add Subsection
-        </button>
-        <button onClick={() => removeSection(section.id)}>Remove</button>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onBlur={handleBlur}
+          />
+          <textarea
+            placeholder="Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            onBlur={handleBlur}
+          />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <button onClick={() => addSubsection(section.id)}>
+            Add Subsection
+          </button>
+          <button onClick={() => removeSection(section.id)}>Remove</button>
+        </div>
       </div>
       {section.sections.length > 0 && (
         <div style={{ marginLeft: '20px' }}>
@@ -51,7 +46,7 @@ const BookSection: React.FC<{
               section={child}
               addSubsection={addSubsection}
               removeSection={removeSection}
-              updateSectionTitle={updateSectionTitle}
+              updateSection={updateSection}
             />
           ))}
         </div>

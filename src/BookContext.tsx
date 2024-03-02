@@ -6,7 +6,7 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react';
-import { Book } from '../types';
+import { Book } from './types';
 import useCache from '@hooks/useCache';
 
 type BookContextType = {

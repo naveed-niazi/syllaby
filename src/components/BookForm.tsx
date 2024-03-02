@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Section, Book } from '@types';
 import useAuth from '@hooks/useAuth';
-import BookSection from '@components/BookSection';
+import { Section } from '../types';
+import BookEdit from '@components/BookSection';
 
 type SectionsState = Section[];
 
@@ -115,8 +115,9 @@ const BookForm = ({ section, handleSave }: BookFormProps) => {
   return (
     <div>
       <button onClick={addSection}>Add Section</button>
+
       {sections.map((section) => (
-        <BookSection
+        <BookEdit
           key={section.id}
           section={section}
           addSubsection={addSubsection}

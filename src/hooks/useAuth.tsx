@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { User } from '../../types';
+import { User } from '@/src/types';
 
 type AuthToken = {
   accessToken: string;
