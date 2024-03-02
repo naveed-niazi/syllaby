@@ -17,8 +17,12 @@ function AddBookPage() {
 
   const [book, setBook] = React.useState<Book>(initialValue);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleUpdates = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBook({ ...book, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = (sections: Book['sections']) => {
+    setBook({ ...book, sections: sections });
     if (!book.title) {
       window.alert('Please enter a title');
       return;
@@ -28,18 +32,20 @@ function AddBookPage() {
     redirect('/');
   };
 
-  const handleUpdates = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBook({ ...book, [e.target.name]: e.target.value });
-  };
-
-  const handleSave = (sections: Book['sections']) => {
-    setBook({ ...book, sections: sections });
-  };
-
   return (
     <div>
-      <button onClick={() => redirect('/')}>Back</button>
-      <h1>Add Book</h1>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <h1>Add Book</h1>
+        <button className="action-button" onClick={() => redirect('/')}>
+          Back
+        </button>
+      </div>
       <div>
         <label htmlFor="title">Title</label>
         <input
@@ -51,8 +57,7 @@ function AddBookPage() {
           onChange={handleUpdates}
         />
       </div>
-      <BookForm section={book.sections} handleSave={handleSave} />
-      <button onClick={handleSubmit}>Add Book</button>
+      <BookForm isNew section={book.sections} handleSave={handleSave} />
     </div>
   );
 }

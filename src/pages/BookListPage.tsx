@@ -2,7 +2,7 @@ import { useBooks } from '@/src/BookContext';
 import { Book } from '@/src/types';
 
 function BookListPage() {
-  const { books, deleteBook } = useBooks();
+  const { books } = useBooks();
   return (
     <div className="book-list">
       <h1>Books List</h1>
@@ -11,9 +11,6 @@ function BookListPage() {
           <a key={book.id} href={`/book/${book.id}`} className="book-item">
             {book.title}
           </a>
-          <button className="delete-button" onClick={() => deleteBook(book.id)}>
-            Delete
-          </button>
         </div>
       ))}
       {books.length === 0 && <p>No books to display</p>}

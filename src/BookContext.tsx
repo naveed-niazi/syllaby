@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { Book } from './types';
 import useCache from '@hooks/useCache';
+import useAuth from '@hooks/useAuth';
 
 type BookContextType = {
   books: Book[];
@@ -18,6 +19,7 @@ type BookContextType = {
 
 const BookContext = createContext<BookContextType | undefined>(undefined);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useBooks = () => {
   const context = useContext(BookContext);
   if (!context) {
@@ -30,6 +32,7 @@ export const BookProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { save, load } = useCache();
+  const { user } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -48,7 +51,9 @@ export const BookProvider: React.FC<{ children: ReactNode }> = ({
   }, [books]);
 
   const addBook = (book: Book) => {
-    setBooks((prevBooks) => [...prevBooks, book]);
+    if (!user) return window.alert('You must be logged in to add a book');
+    setBooks((prevBooks) => [...prevBooks, { ...book, authorId: user.id }]);
+
     window.alert('Book added successfully');
   };
 
@@ -62,6 +67,13 @@ export const BookProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const deleteBook = (id: string) => {
+    const confirm = window.confirm(
+      'Are you sure you want to delete this book?'
+    );
+    if (!confirm) return;
+    const book = books.find((book) => book.id === id);
+    if (book?.authorId !== user?.id)
+      return window.alert('You can only delete books you created');
     setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
   };
 

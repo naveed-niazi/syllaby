@@ -38,6 +38,17 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  background-color: #ccc;
+  color: #000;
+  cursor: not-allowed;
+}
+
+.action-button {
+  height: '30px';
+  margin-top: '20px';
+}
+
 .book-list {
   display: flex;
   flex-direction: column;

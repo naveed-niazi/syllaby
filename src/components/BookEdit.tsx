@@ -1,12 +1,21 @@
 import React, { useState, Fragment } from 'react';
 import { Section } from '@/src/types';
 
-const BookSection: React.FC<{
+interface BookEditProps {
   section: Section;
+  isAuthor?: boolean;
   addSubsection: (parentId: string) => void;
   removeSection: (id: string) => void;
   updateSection: (id: string, newTitle: string, content: string) => void;
-}> = ({ section, addSubsection, removeSection, updateSection }) => {
+}
+
+const BookEdit: React.FC<BookEditProps> = ({
+  section,
+  isAuthor,
+  addSubsection,
+  removeSection,
+  updateSection,
+}) => {
   const [title, setTitle] = useState(section.title);
   const [content, setContent] = useState(section.content);
 
@@ -31,7 +40,10 @@ const BookSection: React.FC<{
             onBlur={handleBlur}
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'end' }}>
+        <div
+          hidden={!isAuthor}
+          style={{ display: 'flex', justifyContent: 'end' }}
+        >
           <button onClick={() => addSubsection(section.id)}>
             Add Subsection
           </button>
@@ -41,7 +53,7 @@ const BookSection: React.FC<{
       {section.sections.length > 0 && (
         <div style={{ marginLeft: '20px' }}>
           {section.sections.map((child) => (
-            <BookSection
+            <BookEdit
               key={child.id}
               section={child}
               addSubsection={addSubsection}
@@ -55,4 +67,4 @@ const BookSection: React.FC<{
   );
 };
 
-export default BookSection;
+export default BookEdit;

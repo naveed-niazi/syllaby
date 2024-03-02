@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import useAuth from '@hooks/useAuth';
 import { Section } from '../types';
-import BookEdit from '@components/BookSection';
+import BookEdit from '@components/BookEdit';
 
 type SectionsState = Section[];
 
 interface BookFormProps {
   section: Section[];
+  isAuthor?: boolean;
+  isNew?: boolean;
   handleSave: (sections: Section[]) => void;
 }
 
@@ -14,7 +16,12 @@ const generateId = () => {
   return Math.random().toString(36).substr(2, 9);
 };
 
-const BookForm = ({ section, handleSave }: BookFormProps) => {
+const BookForm = ({
+  isNew = false,
+  section,
+  handleSave,
+  isAuthor = true,
+}: BookFormProps) => {
   const { user } = useAuth();
   const [sections, setSections] = useState<SectionsState>(section);
 
@@ -114,18 +121,20 @@ const BookForm = ({ section, handleSave }: BookFormProps) => {
 
   return (
     <div>
-      <button onClick={addSection}>Add Section</button>
-
+      {isAuthor && <button onClick={addSection}>Add Section</button>}
       {sections.map((section) => (
         <BookEdit
           key={section.id}
           section={section}
+          isAuthor={isAuthor}
           addSubsection={addSubsection}
           removeSection={removeSection}
           updateSection={updateSection}
         />
       ))}
-      <button onClick={() => handleSave(sections)}>Save</button>
+      <button onClick={() => handleSave(sections)}>
+        {isNew ? 'Add Book' : 'Save'}
+      </button>
     </div>
   );
 };
